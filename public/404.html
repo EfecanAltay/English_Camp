@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <title>YDS & YÖKDİL Kampı</title>
+    <script>
+      // GitHub Pages SPA Redirect to HashRouter
+      const l = window.location;
+      const repoName = 'English_Camp';
+      const path = l.pathname;
+      
+      let redirectPath = '';
+      if (path.includes('/' + repoName)) {
+        redirectPath = path.substring(path.indexOf('/' + repoName) + repoName.length + 1);
+      } else {
+        redirectPath = path;
+      }
+      
+      // Clean leading slash
+      if (redirectPath.startsWith('/')) {
+        redirectPath = redirectPath.substring(1);
+      }
+      
+      const search = l.search || '';
+      const hash = l.hash || '';
+      
+      const basePath = path.includes('/' + repoName) ? '/' + repoName + '/' : '/';
+      window.location.replace(basePath + (redirectPath ? '#/' + redirectPath : '') + search + hash);
+    </script>
+  </head>
+  <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #131B1E; color: #F1A400;">
+    <h2>YDS &amp; YÖKDİL Kampı Yükleniyor...</h2>
+    <p style="color: #94a3b8;">Lütfen bekleyiniz, yönlendiriliyorsunuz.</p>
+  </body>
+</html>

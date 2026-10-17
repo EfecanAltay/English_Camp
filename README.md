@@ -123,6 +123,38 @@ npm run preview
 
 ---
 
+## 🌐 GitHub Pages Canlı Yayınlama (Deployment)
+
+Proje, GitHub Pages üzerinde **sıfır yapılandırma ile sorunsuz çalışacak şekilde** hazırlanmıştır:
+- **HashRouter Mimarisi**: GitHub Pages'in SPA (Single Page App) sayfalarında sayfa yenilendiğinde (F5) 404 hatası vermesini engeller.
+- **`public/404.html` SPA Yönlendiricisi**: Doğrudan URL ile girilen sayfalarda otomatik olarak doğru rotaya yönlendirir.
+- **Vite Göreli Base Yolu (`./`)**: Repository adı (`/English_Camp/`) veya özel domain fark etmeksizin tüm asset'lerin eksiksiz yüklenmesini sağlar.
+
+### Yöntem 1: GitHub Actions ile Otomatik Dağıtım (Önerilen)
+
+Projeye eklenmiş olan [`.github/workflows/deploy.yml`](file:///.github/workflows/deploy.yml) iş akışı sayesinde, koda her `git push` yapıldığında site otomatik olarak derlenir ve yayınlanır.
+
+1. GitHub deponuzun ayarlarına gidin: **Settings** -> **Pages**.
+2. **Build and deployment** başlığı altındaki **Source** seçeneğini **GitHub Actions** olarak seçin.
+3. Değişiklikleri `master` veya `main` branch'ine push edin:
+   ```bash
+   git add .
+   git commit -m "feat: configure github pages deployment"
+   git push origin master
+   ```
+4. GitHub Actions sekmesinden yayınlanma sürecini izleyin. Birkaç dakika içinde siteniz canlıya alınacaktır:
+   👉 **`https://efecanaltay.github.io/English_Camp/`**
+
+### Yöntem 2: Terminalden Manuel Dağıtım (`gh-pages`)
+
+İsterseniz terminalden tek bir komutla derleyip doğrudan `gh-pages` branch'ine gönderebilirsiniz:
+```bash
+npm run deploy
+```
+Bu komut önce `npm run build` çalıştırarak en güncel `dist/` klasörünü üretir, ardından `gh-pages` branch'ine yükler. (Bu yöntemi kullanırken GitHub Pages ayarlarında Source: **Deploy from a branch** ve Branch: **`gh-pages`** seçili olmalıdır).
+
+---
+
 ## 📂 Proje Dizin Yapısı
 
 ```text
