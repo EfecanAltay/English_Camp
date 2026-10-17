@@ -84,3 +84,27 @@
     background: hsl(var(--muted-foreground) / 0.45);
   }
 }
+
+@keyframes fastFadeOut {
+  0% {
+    opacity: 0.95;
+    transform: scale(0.92);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  65% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+.animate-fast-fade {
+  animation: fastFadeOut 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

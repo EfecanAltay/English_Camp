@@ -10,8 +10,14 @@ import {
   Laptop,
   AlertTriangle,
   CheckCircle2,
+  Cookie,
+  SlidersHorizontal,
+  RotateCcw,
+  Video,
+  Settings2,
 } from 'lucide-react';
 import { useTheme } from '../../../app/providers/ThemeProvider';
+import { useCookieConsent } from '../../../hooks/useCookieConsent';
 import { backupService } from '../../../core/storage/backup.service';
 import { PageHeader } from '../../../components/shared/PageHeader';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../../../components/ui/card';
@@ -20,6 +26,7 @@ import { Badge } from '../../../components/ui/badge';
 
 export const SettingsPage: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const cookieConsent = useCookieConsent();
 
   // Storage Persistence Status
   const [isPersisted, setIsPersisted] = useState<boolean | null>(null);
@@ -225,6 +232,162 @@ export const SettingsPage: React.FC = () => {
           {persistMessage && (
             <p className="text-[11px] text-muted-foreground">{persistMessage}</p>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Cookie & Storage Permissions (KVKK & GDPR) */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base font-semibold flex items-center gap-2">
+              <Cookie className="h-4 w-4 text-primary" />
+              <span>Çerez ve İzin Tercihleri</span>
+            </CardTitle>
+            <Badge
+              variant={
+                cookieConsent.status === 'accepted_all'
+                  ? 'success'
+                  : cookieConsent.status === 'essential_only'
+                  ? 'warning'
+                  : cookieConsent.status === 'customized'
+                  ? 'default'
+                  : 'outline'
+              }
+              className="text-xs"
+            >
+              {cookieConsent.status === 'accepted_all' && 'Tüm İzinler Verildi'}
+              {cookieConsent.status === 'essential_only' && 'Yalnızca Gerekli'}
+              {cookieConsent.status === 'customized' && 'Özel Tercihler'}
+              {cookieConsent.status === 'pending' && 'Onay Bekleniyor'}
+            </Badge>
+          </div>
+          <CardDescription className="text-xs leading-relaxed mt-1">
+            KVKK ve GDPR standartlarına uygun olarak; çevrimdışı IndexedDB veritabanı, YouTube ders videoları ve kişisel deneyim tercihlerinizi buradan yönetebilirsiniz.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2.5">
+            {/* Category 1: Zorunlu */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-muted/40 border border-border/60">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <HardDrive className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-foreground flex items-center gap-2">
+                    <span>Zorunlu Yerel Depolama (IndexedDB / LocalStorage)</span>
+                    <Badge variant="outline" className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">
+                      Her Zaman Aktif
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    Çözdüğünüz sorular, kamp tamamlama durumları ve tema ayarlarınız cihazınızda saklanır.
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 shrink-0 ml-2">Zorunlu</span>
+            </div>
+
+            {/* Category 2: YouTube Media */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-muted/40 border border-border/60">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <Video className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-foreground">
+                    Ders Videoları & YouTube Medyası
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    YouTube üzerinden video derslerin gömülü oynatılması ve bölüm atlamaları.
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant={cookieConsent.preferences.media ? 'outline' : 'secondary'}
+                size="sm"
+                onClick={() =>
+                  cookieConsent.saveCustomPreferences({
+                    media: !cookieConsent.preferences.media,
+                  })
+                }
+                className="text-xs h-7 px-3 shrink-0 ml-2"
+              >
+                {cookieConsent.preferences.media ? 'İzin Verildi' : 'Devre Dışı'}
+              </Button>
+            </div>
+
+            {/* Category 3: Preferences */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-muted/40 border border-border/60">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <Settings2 className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-foreground">
+                    Arayüz Tercihleri & Sinema Modu
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    Genişletilmiş video sinema modu ve son izlenen bölüm konumunun hatırlanması.
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant={cookieConsent.preferences.preferences ? 'outline' : 'secondary'}
+                size="sm"
+                onClick={() =>
+                  cookieConsent.saveCustomPreferences({
+                    preferences: !cookieConsent.preferences.preferences,
+                  })
+                }
+                className="text-xs h-7 px-3 shrink-0 ml-2"
+              >
+                {cookieConsent.preferences.preferences ? 'İzin Verildi' : 'Devre Dışı'}
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-border/60">
+            <div className="text-[11px] text-muted-foreground">
+              {cookieConsent.consentedAt ? (
+                <span>Son Onay: {new Date(cookieConsent.consentedAt).toLocaleDateString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</span>
+              ) : (
+                <span>Henüz tercih kaydedilmedi</span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={cookieConsent.resetConsent}
+                className="gap-1.5 text-xs h-8 text-muted-foreground hover:text-foreground"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                <span>İzni Sıfırla</span>
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => cookieConsent.openBanner({ customize: true })}
+                className="gap-1.5 text-xs h-8"
+              >
+                <SlidersHorizontal className="h-3.5 w-3.5 text-primary" />
+                <span>Banner'ı Göster</span>
+              </Button>
+
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={cookieConsent.acceptAll}
+                className="text-xs h-8 font-bold"
+              >
+                Tümünü Kabul Et
+              </Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

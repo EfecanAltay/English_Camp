@@ -1,13 +1,34 @@
 import { useState, useEffect, useRef, useImperativeHandle, forwardRef, useMemo } from 'react';
-import { ExternalLink, Play, AlertCircle, Clock, ListVideo, ChevronDown, ChevronUp, Sparkles, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
+import {
+  ExternalLink,
+  Play,
+  Pause,
+  RotateCcw,
+  RotateCw,
+  AlertCircle,
+  Clock,
+  ListVideo,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+  CheckCircle2,
+  Maximize2,
+  Minimize2,
+  Video,
+} from 'lucide-react';
 import { Button } from './button';
 import { Badge } from './badge';
 import { cn } from '../../lib/utils';
+import { useCookieConsent } from '../../hooks/useCookieConsent';
 import type { GrammarSectionNote } from '../../core/content/grammar-lessons.data';
 
 export interface YouTubeEmbedHandle {
   seekTo: (seconds: number) => void;
   getCurrentTime: () => number;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  togglePlay: () => void;
+  seekRelative: (deltaSeconds: number) => void;
 }
 
 export interface YouTubeEmbedProps {
@@ -61,6 +82,9 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
   const [isChapterListOpen, setIsChapterListOpen] = useState<boolean>(true);
   const [pendingStartSeconds, setPendingStartSeconds] = useState<number | null>(null);
 
+  const { hasConsented, preferences, saveCustomPreferences, openBanner } = useCookieConsent();
+  const isMediaConsentDenied = hasConsented && !preferences.media;
+
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const playerRef = useRef<any>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -69,10 +93,12 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
   // Sayfa origin'i (YouTube JS API güvenliği için)
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
 
-  // YouTube IFrame API script yükleme
+  // YouTube IFrame API script yükleme (Medya izni reddedilmemişse)
   useEffect(() => {
-    loadYouTubeApi();
-  }, []);
+    if (!isMediaConsentDenied) {
+      loadYouTubeApi();
+    }
+  }, [isMediaConsentDenied]);
 
   // PostMessage ile video zaman ve durum güncellemelerini dinle
   useEffect(() => {
@@ -218,10 +244,126 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
     }
   };
 
+  const [actionFeedback, setActionFeedback] = useState<'play' | 'pause' | 'forward' | 'backward' | null>(null);
+
+  // Aksiyon geribildirim ikonunu 400ms sonra otomatik olarak tamamen kapat
+  useEffect(() => {
+    if (!actionFeedback) return;
+    const timer = setTimeout(() => {
+      setActionFeedback(null);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [actionFeedback]);
+
+  const triggerFeedback = (type: 'play' | 'pause' | 'forward' | 'backward') => {
+    setActionFeedback(type);
+  };
+
+  const playVideo = () => {
+    setIsPlaying(true);
+    let ok = false;
+    if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
+      try {
+        playerRef.current.playVideo();
+        ok = true;
+      } catch (e) {
+        console.warn('YT playVideo error:', e);
+      }
+    }
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
+          '*'
+        );
+        ok = true;
+      } catch (e) {
+        console.warn('postMessage playVideo error:', e);
+      }
+    }
+    return ok;
+  };
+
+  const pauseVideo = () => {
+    setIsPlaying(false);
+    let ok = false;
+    if (playerRef.current && typeof playerRef.current.pauseVideo === 'function') {
+      try {
+        playerRef.current.pauseVideo();
+        ok = true;
+      } catch (e) {
+        console.warn('YT pauseVideo error:', e);
+      }
+    }
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+          '*'
+        );
+        ok = true;
+      } catch (e) {
+        console.warn('postMessage pauseVideo error:', e);
+      }
+    }
+    return ok;
+  };
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      pauseVideo();
+      triggerFeedback('pause');
+    } else {
+      playVideo();
+      triggerFeedback('play');
+    }
+  };
+
+  const seekRelative = (deltaSeconds: number) => {
+    const nextTime = Math.max(0, currentTime + deltaSeconds);
+    seekTo(nextTime);
+    triggerFeedback(deltaSeconds > 0 ? 'forward' : 'backward');
+  };
+
+  // Klavye Kısayolları (Space / K: Oynat/Durdur, J/L: Geri/İleri 10s)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (e.code === 'Space' || e.key === 'k' || e.key === 'K') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.key === 'j' || e.key === 'J') {
+        e.preventDefault();
+        seekRelative(-10);
+      } else if (e.key === 'l' || e.key === 'L') {
+        e.preventDefault();
+        seekRelative(10);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isPlaying, currentTime]);
+
   // Imperative handle
   useImperativeHandle(ref, () => ({
     seekTo,
     getCurrentTime: () => currentTime,
+    playVideo,
+    pauseVideo,
+    togglePlay,
+    seekRelative,
   }));
 
   // O an oynatılan bölüm indeksi
@@ -249,6 +391,9 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
+      iv_load_policy: '3', // Hides video annotations and channel popups
+      autohide: '1',       // Autohides player controls quickly
+      controls: '1',
     });
     if (origin) {
       params.set('origin', origin);
@@ -267,18 +412,60 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
       className
     )}>
       {/* Video Container */}
-      <div className="relative aspect-video w-full bg-black">
-        {!hasError ? (
-          <iframe
-            id={iframeUniqueId}
-            ref={iframeRef}
-            src={iframeSrc}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            onError={() => setHasError(true)}
-            className="h-full w-full border-0"
-          />
+      <div className="relative aspect-video w-full bg-black select-none group">
+        {isMediaConsentDenied ? (
+          <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center text-white bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary border border-primary/30 mb-3 shadow-lg">
+              <Video className="h-6 w-6" />
+            </div>
+            <p className="text-sm font-bold text-white">YouTube Medya Çerezleri Devre Dışı</p>
+            <p className="text-xs text-slate-300 mt-1 max-w-md leading-relaxed">
+              Ders videolarını doğrudan platform üzerinden oynatabilmek ve konu anlatımı bölümlerine atlayabilmek için YouTube medya iznine ihtiyaç duyulmaktadır.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={() => saveCustomPreferences({ media: true })}
+                className="text-xs font-bold gap-1.5 shadow-md"
+              >
+                <Play className="h-3.5 w-3.5" />
+                <span>İzin Ver ve Oynat</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => openBanner({ customize: true })}
+                className="text-xs text-white border-white/20 hover:bg-white/10"
+              >
+                <span>Çerez Tercihlerini Aç</span>
+              </Button>
+              <a
+                href={youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 transition-colors"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span>YouTube'da Aç</span>
+              </a>
+            </div>
+          </div>
+        ) : !hasError ? (
+          <>
+            <iframe
+              id={iframeUniqueId}
+              ref={iframeRef}
+              src={iframeSrc}
+              title={title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              onError={() => setHasError(true)}
+              className="h-full w-full border-0"
+            />
+
+
+          </>
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center text-white bg-slate-900">
             <AlertCircle className="h-10 w-10 text-amber-500 mb-2" />
@@ -299,14 +486,63 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
         )}
       </div>
 
-      {/* Video Header Bar: Title, Playing Status, Cinema Mode & YouTube Link */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 bg-card/95 p-3 text-xs">
+      {/* Video Header Bar: Title, Playing Status, Quick Controls, Cinema Mode & YouTube Link */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/50 bg-card/95 p-2.5 sm:px-3 text-xs">
         <div className="flex items-center gap-2 truncate max-w-full sm:max-w-md">
-          <span className={cn(
-            "flex h-2.5 w-2.5 rounded-full shrink-0 transition-colors",
-            isPlaying ? "bg-red-500 animate-pulse ring-2 ring-red-400/40" : "bg-muted-foreground/40"
-          )} />
-          <span className="truncate font-semibold text-foreground">{title}</span>
+          {/* Hızlı Oynat / Duraklat Butonu */}
+          <Button
+            type="button"
+            variant={isPlaying ? "outline" : "primary"}
+            size="sm"
+            onClick={togglePlay}
+            className={cn(
+              "h-7 px-2.5 text-[11px] gap-1.5 font-bold transition-all shrink-0",
+              isPlaying
+                ? "border-border text-foreground hover:bg-muted"
+                : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs"
+            )}
+            title={isPlaying ? "Videoyu Duraklat (Boşluk / K)" : "Videoyu Oynat (Boşluk / K)"}
+          >
+            {isPlaying ? (
+              <>
+                <Pause className="h-3.5 w-3.5 fill-current" />
+                <span className="hidden sm:inline">Durdur</span>
+              </>
+            ) : (
+              <>
+                <Play className="h-3.5 w-3.5 fill-current text-primary-foreground" />
+                <span className="hidden sm:inline">Oynat</span>
+              </>
+            )}
+          </Button>
+
+          {/* Hızlı Geri / İleri Sarma Butonları (±10s) */}
+          <div className="flex items-center gap-1 shrink-0">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => seekRelative(-10)}
+              className="h-7 px-1.5 text-[10px] font-mono gap-0.5 text-muted-foreground hover:text-foreground hover:border-primary/40"
+              title="10 saniye geri al (Kısayol: J)"
+            >
+              <RotateCcw className="h-3 w-3" />
+              <span>-10s</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => seekRelative(10)}
+              className="h-7 px-1.5 text-[10px] font-mono gap-0.5 text-muted-foreground hover:text-foreground hover:border-primary/40"
+              title="10 saniye ileri al (Kısayol: L)"
+            >
+              <RotateCw className="h-3 w-3" />
+              <span>+10s</span>
+            </Button>
+          </div>
+
+          <span className="truncate font-semibold text-foreground text-xs ml-1">{title}</span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { BottomNav } from './BottomNav';
+import { CookieConsentBanner } from '../../components/shared/CookieConsentBanner';
 
 export const MainLayout: React.FC = () => {
   return (
@@ -22,6 +23,9 @@ export const MainLayout: React.FC = () => {
 
         {/* Mobile Bottom Navigation */}
         <BottomNav />
+
+        {/* Cookie & Storage Consent Banner */}
+        <CookieConsentBanner />
       </div>
     </div>
   );
