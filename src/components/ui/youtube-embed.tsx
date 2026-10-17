@@ -15,11 +15,16 @@ import {
   Maximize2,
   Minimize2,
   Video,
+  ThumbsUp,
+  Bell,
+  Heart,
+  X,
 } from 'lucide-react';
 import { Button } from './button';
 import { Badge } from './badge';
 import { cn } from '../../lib/utils';
 import { useCookieConsent } from '../../hooks/useCookieConsent';
+import { VideoSupportModal } from '../shared/VideoSupportModal';
 import type { GrammarSectionNote } from '../../core/content/grammar-lessons.data';
 
 export interface YouTubeEmbedHandle {
@@ -82,6 +87,22 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
   const [isChapterListOpen, setIsChapterListOpen] = useState<boolean>(true);
   const [pendingStartSeconds, setPendingStartSeconds] = useState<number | null>(null);
 
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState<boolean>(false);
+  const [isSupportBannerDismissed, setIsSupportBannerDismissed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('yds_support_banner_dismissed') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [hasSupported, setHasSupported] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('yds_creator_supported') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
   const { hasConsented, preferences, saveCustomPreferences, openBanner } = useCookieConsent();
   const isMediaConsentDenied = hasConsented && !preferences.media;
 
@@ -117,12 +138,18 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
           if (typeof data.info.playerState === 'number') {
             // 1: playing, 2: paused, 0: ended
             setIsPlaying(data.info.playerState === 1);
+            if (data.info.playerState === 0) {
+              setIsSupportModalOpen(true);
+            }
           }
         }
 
         // onStateChange event
         if (data.event === 'onStateChange') {
           setIsPlaying(data.info === 1);
+          if (data.info === 0) {
+            setIsSupportModalOpen(true);
+          }
         }
       } catch {
         // yoksay
@@ -149,6 +176,9 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
               if (isCancelled) return;
               const state = event.data;
               setIsPlaying(state === 1);
+              if (state === 0) {
+                setIsSupportModalOpen(true);
+              }
 
               if (state === 1) {
                 // Oynatılıyorken periyodik zaman güncellemesi
@@ -600,6 +630,64 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
         </div>
       </div>
 
+      {/* Dilci Burak Hoca Destek ve Abone Olma Bilgi Çubuğu */}
+      {!isSupportBannerDismissed && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-3 py-2 bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-primary/10 border-t border-border/60 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 shrink-0">
+              <Heart className="h-3.5 w-3.5 fill-current" />
+            </span>
+            <p className="text-foreground text-[11px] leading-tight">
+              <strong>Dilci Burak Hoca'ya Destek Olun:</strong> Bu ücretsiz dersler için videoyu beğenmeyi ve kanala abone olmayı unutmayın!
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-rose-600 hover:bg-rose-700 text-white transition-colors shadow-xs"
+              title="Videoyu YouTube'da Beğen"
+            >
+              <ThumbsUp className="h-3 w-3" />
+              <span>Beğen</span>
+            </a>
+            <a
+              href="https://www.youtube.com/@dilciburakhoca?sub_confirmation=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90 transition-opacity shadow-xs"
+              title="Kanala Abone Ol"
+            >
+              <Bell className="h-3 w-3" />
+              <span>Abone Ol</span>
+            </a>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsSupportModalOpen(true)}
+              className="h-6 px-2 text-[11px] text-muted-foreground hover:text-foreground font-medium"
+            >
+              Bilgi Ekranı
+            </Button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsSupportBannerDismissed(true);
+                try {
+                  localStorage.setItem('yds_support_banner_dismissed', 'true');
+                } catch { }
+              }}
+              className="p-1 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted/60 transition-colors"
+              title="Kapat"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Video Sections / Chapters Navigation Panel */}
       {sections && sections.length > 0 && (
         <div className="border-t border-border/60 bg-muted/20">
@@ -723,6 +811,16 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
           )}
         </div>
       )}
+
+      {/* Dilci Burak Hoca Beğen & Abone Ol Bilgi Ekranı Modalı */}
+      <VideoSupportModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+        videoId={videoId}
+        videoTitle={title}
+        instructor="Dilci Burak Hoca"
+        onSupported={() => setHasSupported(true)}
+      />
     </div>
   );
 });
