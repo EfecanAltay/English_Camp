@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 196 22% 10%; /* #131B1E */
+    --card: 0 0% 100%;
+    --card-foreground: 196 22% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 196 22% 10%;
+
+    /* Ana Renk (Primary): #F1A400 */
+    --primary: 41 100% 47%;
+    --primary-foreground: 196 22% 10%; /* #131B1E (Yüksek kontrastlı, net okunabilir) */
+
+    /* İkinci Renk (Secondary): #131B1E */
+    --secondary: 196 22% 10%;
+    --secondary-foreground: 41 100% 47%;
+
+    --muted: 196 15% 94%;
+    --muted-foreground: 196 15% 42%;
+    --accent: 41 100% 95%;
+    --accent-foreground: 196 22% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 196 15% 88%;
+    --input: 196 15% 88%;
+    --ring: 41 100% 47%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 196 25% 7%; /* Derin karanlık taban #0e1416 */
+    --foreground: 41 20% 94%;
+    --card: 196 22% 10%; /* #131B1E */
+    --card-foreground: 41 20% 94%;
+    --popover: 196 22% 10%; /* #131B1E */
+    --popover-foreground: 41 20% 94%;
+
+    /* Ana Renk (Primary): #F1A400 */
+    --primary: 41 100% 47%;
+    --primary-foreground: 196 22% 8%; /* #131B1E */
+
+    /* İkinci Renk (Secondary): #131B1E */
+    --secondary: 196 20% 15%;
+    --secondary-foreground: 41 100% 50%;
+
+    --muted: 196 20% 15%;
+    --muted-foreground: 196 12% 65%;
+    --accent: 196 20% 16%;
+    --accent-foreground: 41 100% 50%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 196 18% 16%;
+    --input: 196 18% 16%;
+    --ring: 41 100% 47%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.45);
+  }
+}

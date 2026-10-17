@@ -1,0 +1,874 @@
+{
+  "id": "yds-yokdil-18-day-camp",
+  "title": "18 Günde YDS – YÖKDİL – YDT Başarı Kampı",
+  "version": "1.0.0",
+  "totalDays": 18,
+  "isSample": false,
+  "sampleDisclaimer": "",
+  "days": [
+    {
+      "id": "day-1",
+      "dayNumber": 1,
+      "title": "Tenses Part 1: Temel Zamanlar ve Giriş",
+      "description": "Present Simple, Present Continuous, Past Simple ve Present Perfect zamanlarının sınav odaklı mantığı, video ders anlatımı ve ders notları.",
+      "tasks": [
+        {
+          "id": "d1-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-tenses-1",
+          "title": "Grammar: Tenses Part 1 — Video Ders & Ders Notları",
+          "description": "Dilci Burak Hoca ile Present ve Past zamanların sınav odaklı analizi ve zaman zarfları.",
+          "estimatedMinutes": 45,
+          "targetCount": 4,
+          "required": true
+        },
+        {
+          "id": "d1-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-1",
+          "title": "Vocabulary: Hedef Akademik Kelimeler — Set 1",
+          "description": "Kritik 20-30 akademik kelime: Eş anlamlıları, bağlam içi kullanımları ve kelime defteri tekrarı.",
+          "estimatedMinutes": 25,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d1-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-1",
+          "title": "Reading: Akademik Cümle Bölme ve Analiz — Metin 1",
+          "description": "Cümle içi bağlaç takibi, slash tekniği ile cümle bölme ve bilinmeyen kelime çıkarma.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d1-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-sentence-completion-1",
+          "title": "Skills: Cümle Tamamlama — Temel Giriş",
+          "description": "Neden-sonuç ve zaman uyumu temelinde cümle tamamlama stratejileri.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-2",
+      "dayNumber": 2,
+      "title": "Tenses Part 2: Perfect, Future ve Zaman Bağlaçları",
+      "description": "Past Perfect, Future zamanlar, By the time, When, While bağlaç kuralları ve zaman uyumu.",
+      "tasks": [
+        {
+          "id": "d2-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-tenses-2",
+          "title": "Grammar: Tenses Part 2 — Perfect & Future Yapıları",
+          "description": "Zaman uyumu altın kuralları, istisnalar ve sınav tuzakları.",
+          "estimatedMinutes": 45,
+          "targetCount": 4,
+          "required": true
+        },
+        {
+          "id": "d2-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-2",
+          "title": "Vocabulary: Hedef Akademik Kelimeler — Set 2",
+          "description": "Hedef akademik fiiller, eş anlamlılar ve 1. gün kelimeleriyle sarmal tekrar.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d2-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-2",
+          "title": "Reading: Tarih ve Sosyal Bilimler Okuması",
+          "description": "Kronolojik akış, zaman bağlaçlarının takibi ve ana fikir tespiti.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d2-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-cloze-1",
+          "title": "Skills: Cloze Test — Zaman Uyumu Analizi",
+          "description": "Paragraf içi zaman boşluklarında bağlam ve ipucu yakalama.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-3",
+      "dayNumber": 3,
+      "title": "Tenses Soru Çözümü: Taktikler ve Eleme Yöntemleri",
+      "description": "Zaman sorularında çeviriye boğulmadan ipucu ve zaman zarfı takibiyle hızlı soru çözümü.",
+      "tasks": [
+        {
+          "id": "d3-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-tenses-practice",
+          "title": "Grammar: Tenses Soru Çözümü & Analiz",
+          "description": "Sınav formatındaki zaman sorularının adım adım çözümü ve çeldirici eleme.",
+          "estimatedMinutes": 35,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d3-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-3",
+          "title": "Vocabulary: Sınav Klasiği Phrasal Verbs — Set 1",
+          "description": "Carry out, account for, bring about gibi en çok çıkan fiil öbekleri.",
+          "estimatedMinutes": 25,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d3-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-3",
+          "title": "Reading: Bilim ve Teknoloji Pasajı",
+          "description": "Yazarın tutumu ve çıkarım (inference) soruları üzerine odaklanma.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d3-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-paraphrase-1",
+          "title": "Skills: Anlamca En Yakın Cümleyi Bulma (Restatement)",
+          "description": "Zaman yapıları ve niteleyiciler üzerinden doğru restatement seçimi.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-4",
+      "dayNumber": 4,
+      "title": "Modals Part 1: Present & Future Modals",
+      "description": "Zorunluluk, olasılık, tavsiye ve yetenek bildiren temel modal yapıları ve nüansları.",
+      "tasks": [
+        {
+          "id": "d4-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-modals-1",
+          "title": "Grammar: Present & Future Modals — Konu Anlatımı",
+          "description": "Can, may, must, should, have to gibi kiplerin akademik sınavlardaki anlam incelikleri.",
+          "estimatedMinutes": 40,
+          "targetCount": 5,
+          "required": true
+        },
+        {
+          "id": "d4-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-4",
+          "title": "Vocabulary: Akademik Sıfatlar ve Zıt Anlamlıları",
+          "description": "Önem, miktar ve sıklık bildiren 20 akademik sıfat.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d4-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-4",
+          "title": "Reading: Çevre ve Ekoloji Metni",
+          "description": "Modal içeren cümlelerin çeviri hassasiyeti ve ana fikir tespiti.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d4-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-irrelevant-1",
+          "title": "Skills: Akışı Bozan Cümle (Irrelevant)",
+          "description": "Özne, zaman ve ton uyumsuzluğu olan cümleleri tespit etme.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-5",
+      "dayNumber": 5,
+      "title": "Modals Part 2: Perfect Modals ve Geçmiş Çıkarımlar",
+      "description": "Must have V3, should have V3, could have V3 gibi geçmişe yönelik olasılık ve pişmanlık yapıları.",
+      "tasks": [
+        {
+          "id": "d5-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-modals-2",
+          "title": "Grammar: Perfect Modals (Modal + Have V3)",
+          "description": "Sınavda en çok çeldirici olarak kullanılan Modal + have V3 kalıplarının ayrımı.",
+          "estimatedMinutes": 45,
+          "targetCount": 5,
+          "required": true
+        },
+        {
+          "id": "d5-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-5",
+          "title": "Vocabulary: Akademik İsimler ve Collocations",
+          "description": "Sık birlikte kullanılan fiil-isim eşleşmeleri.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d5-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-5",
+          "title": "Reading: Sağlık ve Biyoloji Okuması",
+          "description": "Hipotez ve geçmiş çıkarım cümlelerinin doğru çevirisi.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d5-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-translation-1",
+          "title": "Skills: Çeviri Teknikleri (İngilizce - Türkçe)",
+          "description": "Modal içeren cümlelerde doğru kip ekini Türkçe yüklemde arama.",
+          "estimatedMinutes": 20,
+          "targetCount": 8,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-6",
+      "dayNumber": 6,
+      "title": "Modals Soru Çözümü ve Haftalık Pekiştirme",
+      "description": "Tüm modal yapılarının özgün sorular üzerinden analizi ve hafta başı konularının tekrarı.",
+      "tasks": [
+        {
+          "id": "d6-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-modals-practice",
+          "title": "Grammar: Modals Soru Çözümü",
+          "description": "Geçmiş sınav soruları ayarında modal sorularının adım adım çözümü.",
+          "estimatedMinutes": 35,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d6-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-review-1",
+          "title": "Vocabulary: 1. Hafta Sarmal Kelime Tekrarı",
+          "description": "İlk 5 günde öğrenilen tüm kelimelerin toplu testi.",
+          "estimatedMinutes": 30,
+          "targetCount": 50,
+          "required": true
+        },
+        {
+          "id": "d6-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-6",
+          "title": "Reading: Karma Akademik Paragraf Çözümü",
+          "description": "Zaman kısıtlamalı 2 adet çok sorulu akademik okuma parçası.",
+          "estimatedMinutes": 25,
+          "targetCount": 6,
+          "required": true
+        },
+        {
+          "id": "d6-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-dialogue-1",
+          "title": "Skills: Karşılıklı Konuşma (Dialogue)",
+          "description": "Diyalog tamamlama sorularında referans kelimeler ve tutarlı yanıt takibi.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-7",
+      "dayNumber": 7,
+      "title": "Passive Voice & Causatives: Edilgen ve Ettirgen Yapılar",
+      "description": "Nesne alabilen fiiller, 'be + V3' mantığı, 'have/get sth done' kalıpları ve akademik dildeki yeri.",
+      "tasks": [
+        {
+          "id": "d7-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-passive-1",
+          "title": "Grammar: Passive Voice ve Causatives",
+          "description": "Nesne takibi ile aktif/pasif ayrımı ve akademik raporlama kalıpları (It is said that...).",
+          "estimatedMinutes": 45,
+          "targetCount": 6,
+          "required": true
+        },
+        {
+          "id": "d7-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-6",
+          "title": "Vocabulary: Bilimsel ve Akademik Raporlama Fiilleri",
+          "description": "Claim, maintain, demonstrate, assert gibi akademik yazım fiilleri.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d7-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-7",
+          "title": "Reading: Tıp ve Deney Metinleri",
+          "description": "Edilgen yapıların yoğun olduğu bilimsel araştırma metinlerinin analizi.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d7-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-sentence-completion-2",
+          "title": "Skills: Cümle Tamamlama — Pasif Uyum",
+          "description": "Öznesi gizli veya edilgen çatılı cümle tamamlama stratejileri.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-8",
+      "dayNumber": 8,
+      "title": "Passive Voice Soru Çözümü",
+      "description": "Edilgen çatı ve ettirgen yapı sorularında by + fail ipuçları ve aktif/pasif eleme taktikleri.",
+      "tasks": [
+        {
+          "id": "d8-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-passive-practice",
+          "title": "Grammar: Passive Voice Soru Çözümü",
+          "description": "ÖSYM tarzı özgün passive ve causative soru çözümleri.",
+          "estimatedMinutes": 35,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d8-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-7",
+          "title": "Vocabulary: Phrasal Verbs Set 2",
+          "description": "Geçişli/geçişsiz en yaygın 15 edatlı fiil.",
+          "estimatedMinutes": 20,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d8-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-8",
+          "title": "Reading: Sosyoloji ve İnsan Davranışları",
+          "description": "Sebep-sonuç ilişkileri ve çıkarım soruları.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d8-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-restatement-2",
+          "title": "Skills: Restatement — Aktif/Pasif Dönüşümleri",
+          "description": "Aktif cümlenin pasife, pasif cümlenin aktife dönüştüğü doğru eşleşmeleri bulma.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-9",
+      "dayNumber": 9,
+      "title": "Adjective (Relative) Clauses: Sıfat Cümlecikleri",
+      "description": "Who, which, that, whose, where, when kullanımları ve 'preposition + relative pronoun' yapıları.",
+      "tasks": [
+        {
+          "id": "d9-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-relative-clauses",
+          "title": "Grammar: Relative Clauses Konu Anlatımı & İpuçları",
+          "description": "Defining / Non-defining ayrımı ve 'of which', 'in whom' gibi ileri düzey yapılar.",
+          "estimatedMinutes": 45,
+          "targetCount": 6,
+          "required": true
+        },
+        {
+          "id": "d9-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-8",
+          "title": "Vocabulary: Akademik Zarflar (Adverbs)",
+          "description": "Significantly, considerably, inevitably gibi fiili niteleyen zarflar.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d9-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-9",
+          "title": "Reading: Kültürel Miras ve Sanat Tarihi",
+          "description": "Uzun sıfat cümlecikleri içeren karmaşık cümlelerin doğru çözümlenmesi.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d9-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-cloze-2",
+          "title": "Skills: Cloze Test — Zamir ve Bağlaç Boşlukları",
+          "description": "Öncesindeki isme göre doğru ilgi zamirini seçme taktikleri.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-10",
+      "dayNumber": 10,
+      "title": "Noun Clauses: İsim Cümlecikleri",
+      "description": "That, whether/if, wh- soru kelimeleri ve the fact that kalıbı ile özne-nesne konumundaki cümlecikler.",
+      "tasks": [
+        {
+          "id": "d10-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-noun-clauses",
+          "title": "Grammar: Noun Clauses Konu Anlatımı",
+          "description": "Noun clause ile Relative clause farkı, that düşmesi ve sınavın en sevdiği kalıplar.",
+          "estimatedMinutes": 45,
+          "targetCount": 5,
+          "required": true
+        },
+        {
+          "id": "d10-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-9",
+          "title": "Vocabulary: Fikir ve Argüman Kelimeleri",
+          "description": "Argue, assume, confirm, emphasize gibi noun clause alan kritik fiiller.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d10-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-10",
+          "title": "Reading: Psikoloji ve Nörobilim Metinleri",
+          "description": "İddia ve bulgu aktaran isim cümleciklerini hızlı anlama pratiği.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d10-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-paragraph-completion-1",
+          "title": "Skills: Paragraf Tamamlama Giriş",
+          "description": "Boşluğun önü ve arkasındaki referans kelimeler ile bağlaç ilişkisini yakalama.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-11",
+      "dayNumber": 11,
+      "title": "Adverbial Clauses Part 1: Zıtlık ve Neden-Sonuç Bağlaçları",
+      "description": "Although, despite, whereas zıtlık bağlaçları ile because, due to, since neden-sonuç yapıları.",
+      "tasks": [
+        {
+          "id": "d11-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-adverbial-1",
+          "title": "Grammar: Adverbial Clauses (Zıtlık & Sebep-Sonuç)",
+          "description": "Cümle alanlar (+SVO) ile isim/isim öbeği alanlar (+noun) arasındaki kesin ayrım tablosu.",
+          "estimatedMinutes": 45,
+          "targetCount": 8,
+          "required": true
+        },
+        {
+          "id": "d11-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-10",
+          "title": "Vocabulary: Zıtlık ve Vurgu Belirten İfadeler",
+          "description": "Contradictory, unprecedented, detrimental gibi sınav odaklı kelimeler.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d11-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-11",
+          "title": "Reading: Küresel Ekonomi ve Krizler",
+          "description": "Zıtlık akışı olan makalelerde ana fikir çıkarma.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d11-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-sentence-completion-3",
+          "title": "Skills: Cümle Tamamlama — Zıtlık Bağlaçları",
+          "description": "+/- kutup analizi yöntemiyle zıtlık sorularını 30 saniyede çözme.",
+          "estimatedMinutes": 25,
+          "targetCount": 8,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-12",
+      "dayNumber": 12,
+      "title": "Adverbial Clauses Part 2: Koşul, Amaç ve Ek Ekleme Bağlaçları",
+      "description": "In order that, so that, moreover, in addition, provided that gibi ikinci grup bağlaçlar.",
+      "tasks": [
+        {
+          "id": "d12-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-adverbial-2",
+          "title": "Grammar: Adverbial Clauses (Koşul, Amaç & Geçiş İfadeleri)",
+          "description": "Geçiş zarfları (However, Therefore) ile bağlaçların noktalama farkları.",
+          "estimatedMinutes": 45,
+          "targetCount": 8,
+          "required": true
+        },
+        {
+          "id": "d12-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-11",
+          "title": "Vocabulary: Amaç ve Sonuç Kelimeleri",
+          "description": "Aim, outcome, objective, consequence kelimeleri ve eş anlamlıları.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d12-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-12",
+          "title": "Reading: Yenilenebilir Enerji ve Gelecek",
+          "description": "Koşul ve amaç cümleleri içeren teknik metin analizi.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d12-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-irrelevant-2",
+          "title": "Skills: Akışı Bozan Cümle — Bağlaç Uyumsuzluğu",
+          "description": "Yersiz zıtlık veya geçiş kelimesiyle yön değiştiren cümleleri eleme.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-13",
+      "dayNumber": 13,
+      "title": "Bağlaçlar Soru Çözümü",
+      "description": "Sınavın en yüksek puan getiren bağlaç sorularının taktiksel ve hızlı soru çözümü.",
+      "tasks": [
+        {
+          "id": "d13-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-conjunctions-practice",
+          "title": "Grammar: Bağlaç Soru Çözümü & Nokta Atışı Taktikler",
+          "description": "Boşluğun sağına bakma, +/- yöntemi ve şık eleme stratejisi.",
+          "estimatedMinutes": 40,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d13-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-12",
+          "title": "Vocabulary: Phrasal Verbs Set 3",
+          "description": "Put off, turn down, call off gibi iptal ve erteleme öbekleri.",
+          "estimatedMinutes": 20,
+          "targetCount": 15,
+          "required": true
+        },
+        {
+          "id": "d13-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-13",
+          "title": "Reading: Antropoloji ve Toplum",
+          "description": "Bağlaçların metin organizasyonundaki rollerini analiz etme.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d13-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-translation-2",
+          "title": "Skills: Çeviri Soruları — Bağlaç Odaklı",
+          "description": "Türkçe karşılığı '...-e rağmen', '...-dığı için' olan yapıların doğru tespiti.",
+          "estimatedMinutes": 20,
+          "targetCount": 8,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-14",
+      "dayNumber": 14,
+      "title": "Conditionals & Wish Clauses: Şart Cümleleri",
+      "description": "Type 0, 1, 2, 3, Mixed Conditionals, Inversion (Devrik yapılar) ve wish kalıpları.",
+      "tasks": [
+        {
+          "id": "d14-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-conditionals",
+          "title": "Grammar: Conditionals, Inversion ve Wish Clauses",
+          "description": "Should, Were, Had ile yapılan devrik if yapıları ve sınav şablonları.",
+          "estimatedMinutes": 45,
+          "targetCount": 5,
+          "required": true
+        },
+        {
+          "id": "d14-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-13",
+          "title": "Vocabulary: Şart ve Olasılık Bildiren İfadeler",
+          "description": "Hypothetical, contingent, vulnerable gibi kelimeler.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d14-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-14",
+          "title": "Reading: Jeoloji ve Doğa Olayları",
+          "description": "Varsayımsal çıkarımlar ve neden-koşul örgülerini okuma.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d14-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-restatement-3",
+          "title": "Skills: Restatement — Şart ve Sonuç İlişkisi",
+          "description": "Unless, but for, without kalıplarının if türleriyle yeniden ifade edilişi.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-15",
+      "dayNumber": 15,
+      "title": "Gerunds & Infinitives: Fiilimsiler",
+      "description": "Hangi fiiller V-ing alır, hangileri to V alır; anlam farkı yaratan fiiller ve ezber tabloları.",
+      "tasks": [
+        {
+          "id": "d15-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-gerund-infinitive",
+          "title": "Grammar: Gerund & Infinitive Konu Anlatımı ve Mantığı",
+          "description": "Stop, remember, forget gibi anlam değiştirenler ve edat + V-ing kuralları.",
+          "estimatedMinutes": 40,
+          "targetCount": 6,
+          "required": true
+        },
+        {
+          "id": "d15-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-14",
+          "title": "Vocabulary: Prepositional Verbs (Edat Alan Fiiller)",
+          "description": "Rely on, depend on, contribute to gibi nesneyle edat alan kalıplar.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d15-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-15",
+          "title": "Reading: Eğitim ve Öğrenme Psikolojisi",
+          "description": "Cümle başı ve özne konumundaki gerund yapılarının çözümlenmesi.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d15-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-sentence-completion-4",
+          "title": "Skills: Cümle Tamamlama — Fiilimsi Yapıları",
+          "description": "Amaç bildiren 'in order to' ve 'so as to' yapılarının test edilmesi.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-16",
+      "dayNumber": 16,
+      "title": "Reductions: Kısaltmalar (Participles)",
+      "description": "Sıfat ve zarf cümleciklerinde kısaltma kuralları: V-ing, Having V3, V3, Being V3 ayrımları.",
+      "tasks": [
+        {
+          "id": "d16-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-reductions",
+          "title": "Grammar: Kısaltmalar (Reductions) ve Jet Infinitive Farkı",
+          "description": "Ortak özne kuralı, zaman önceliği (having V3) ve pasif kısaltma (V3) taktikleri.",
+          "estimatedMinutes": 45,
+          "targetCount": 5,
+          "required": true
+        },
+        {
+          "id": "d16-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-15",
+          "title": "Vocabulary: En Sık Sorulan Akademik Sıfat Tamlamaları",
+          "description": "Rapid growth, profound impact gibi kalıplaşmış sınav ikilileri.",
+          "estimatedMinutes": 20,
+          "targetCount": 20,
+          "required": true
+        },
+        {
+          "id": "d16-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-16",
+          "title": "Reading: Uzay Bilimi ve Astronomi",
+          "description": "Başında kısaltma bulunan devrik benzeri cümlelerin hızlı okunması.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d16-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-paraphrase-4",
+          "title": "Skills: Restatement — Kısaltılmış Cümleler",
+          "description": "Kısaltma yapılarını uzun bağlaçlı halleriyle eşleştirme pratikleri.",
+          "estimatedMinutes": 20,
+          "targetCount": 6,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-17",
+      "dayNumber": 17,
+      "title": "Prepositions: Edatlar ve Edat Öbekleri",
+      "description": "Yer, yön, zaman bildiren temel edatlar ile sıfat ve isimlerin aldığı sabit edatlar.",
+      "tasks": [
+        {
+          "id": "d17-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-prepositions",
+          "title": "Grammar: Prepositions (Edatlar) ve Sabit Kullanımlar",
+          "description": "In, on, at kuralları, soyut edat kullanımları ve sınavda en çok çıkan 30 edat kalıbı.",
+          "estimatedMinutes": 45,
+          "targetCount": 8,
+          "required": true
+        },
+        {
+          "id": "d17-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-set-16",
+          "title": "Vocabulary: Sabit Edat Listesi (Adjective + Preposition)",
+          "description": "Associated with, capable of, keen on gibi sabit edatlar.",
+          "estimatedMinutes": 25,
+          "targetCount": 25,
+          "required": true
+        },
+        {
+          "id": "d17-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-passage-17",
+          "title": "Reading: Kültürel Antropoloji",
+          "description": "Metin içerisindeki edat öbeklerini tespit edip doğru anlama pratiği.",
+          "estimatedMinutes": 25,
+          "targetCount": 3,
+          "required": true
+        },
+        {
+          "id": "d17-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-cloze-3",
+          "title": "Skills: Cloze Test — Edat Soruları",
+          "description": "Paragraf boşluğundaki kelimenin aldığı sağ/sol edat ipucunu yakalama.",
+          "estimatedMinutes": 20,
+          "targetCount": 5,
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "day-18",
+      "dayNumber": 18,
+      "title": "Quantifiers: Miktar Belirteçleri ve Kamp Kapanışı",
+      "description": "Much, many, few, little, each, every, none, all miktar belirteçleri ve genel deneme analizi.",
+      "tasks": [
+        {
+          "id": "d18-t1-grammar",
+          "module": "grammar",
+          "lessonId": "grammar-quantifiers",
+          "title": "Grammar: Quantifiers Konu Anlatımı & Kapanış Çözümü",
+          "description": "Sayılabilen/sayılamayan isim uyumu ve of the yapılarında tekil/çoğul fiil kuralları.",
+          "estimatedMinutes": 35,
+          "targetCount": 6,
+          "required": true
+        },
+        {
+          "id": "d18-t2-vocabulary",
+          "module": "vocabulary",
+          "lessonId": "vocab-final-review",
+          "title": "Vocabulary: Kamp Sonu Genel Kelime Değerlendirmesi",
+          "description": "18 gün boyunca çıkarılan tüm kelimelerin final testi.",
+          "estimatedMinutes": 35,
+          "targetCount": 60,
+          "required": true
+        },
+        {
+          "id": "d18-t3-reading",
+          "module": "reading",
+          "lessonId": "reading-full-set",
+          "title": "Reading: Mini Okuma & Paragraf Denemesi",
+          "description": "Sınav süresine uygun tam kapsamlı 4 parçalık reading denemesi.",
+          "estimatedMinutes": 40,
+          "targetCount": 12,
+          "required": true
+        },
+        {
+          "id": "d18-t4-skills",
+          "module": "skills",
+          "lessonId": "skills-mini-exam",
+          "title": "Skills: Karma Soru Çözüm Denemesi",
+          "description": "Cümle tamamlama, çeviri, restatement ve paragraf tamamlama karma denemesi.",
+          "estimatedMinutes": 30,
+          "targetCount": 15,
+          "required": true
+        }
+      ]
+    }
+  ]
+}
