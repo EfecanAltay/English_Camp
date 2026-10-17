@@ -95,7 +95,7 @@ export const YouTubeEmbed = forwardRef<YouTubeEmbedHandle, YouTubeEmbedProps>(({
       return false;
     }
   });
-  const [hasSupported, setHasSupported] = useState<boolean>(() => {
+  const [, setHasSupported] = useState<boolean>(() => {
     try {
       return localStorage.getItem('yds_creator_supported') === 'true';
     } catch {
