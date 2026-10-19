@@ -5,6 +5,7 @@ import { CampCalendarPage } from '../features/study-planner/pages/CampCalendarPa
 import { DayTasksPage } from '../features/study-planner/pages/DayTasksPage';
 import { GrammarPage } from '../features/grammar/pages/GrammarPage';
 import { GrammarDetailPage } from '../features/grammar/pages/GrammarDetailPage';
+import { TensesLabPage } from '../features/grammar/pages/TensesLabPage';
 import { VocabularyPage } from '../features/vocabulary/pages/VocabularyPage';
 import { ReadingPage } from '../features/reading/pages/ReadingPage';
 import { SkillsPage } from '../features/skills/pages/SkillsPage';
@@ -32,6 +33,14 @@ export const router = createHashRouter([
       {
         path: 'grammar',
         element: <GrammarPage />,
+      },
+      {
+        path: 'grammar/tenses-lab',
+        element: <TensesLabPage />,
+      },
+      {
+        path: 'tenses-lab',
+        element: <TensesLabPage />,
       },
       {
         path: 'grammar/:lessonId',

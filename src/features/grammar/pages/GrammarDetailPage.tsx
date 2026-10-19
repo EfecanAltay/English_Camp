@@ -17,6 +17,9 @@ import {
   PanelRightOpen,
   Film,
   X,
+  BookMarked,
+  Plus,
+  Sparkles,
 } from 'lucide-react';
 import { GRAMMAR_LESSONS, getGrammarLessonById, type GrammarLesson } from '../../../core/content/grammar-lessons.data';
 import { YouTubeEmbed, type YouTubeEmbedHandle } from '../../../components/ui/youtube-embed';
@@ -27,6 +30,11 @@ import { Badge } from '../../../components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
 import { useCampProgress } from '../../../hooks/useCampProgress';
 import { taskProgressRepository } from '../../../core/database/repositories/task-progress.repository';
+import { useSavedWords } from '../../../hooks/useSavedWords';
+import { WordModal } from '../../vocabulary/components/WordModal';
+import { WordCard } from '../../vocabulary/components/WordCard';
+import type { SavedWord } from '../../../core/domain/types';
+import type { CreateWordInput } from '../../../core/database/repositories/saved-words.repository';
 import { cn } from '../../../lib/utils';
 
 interface GrammarDayGroup {
@@ -99,7 +107,33 @@ export const GrammarDetailPage: React.FC = () => {
   const currentDayLessons = currentDayGroup?.lessons || [lesson];
   const activePartIndex = currentDayLessons.findIndex((l) => l.id === lesson.id);
 
-  const [activeTab, setActiveTab] = useState<'notes' | 'quiz'>('notes');
+  const [activeTab, setActiveTab] = useState<'notes' | 'quiz' | 'words'>('notes');
+  const [currentVideoSeconds, setCurrentVideoSeconds] = useState<number>(0);
+  const [isWordModalOpen, setIsWordModalOpen] = useState<boolean>(false);
+  const [editingWord, setEditingWord] = useState<SavedWord | null>(null);
+
+  const { words, addWord, updateWord, deleteWord, toggleStatus, toggleFavorite } = useSavedWords();
+
+  // Bu derse ait kaydedilen kelimeler
+  const lessonWords = useMemo(
+    () => (words as SavedWord[]).filter((w: SavedWord) => w.sourceLessonId === lesson.id),
+    [words, lesson.id]
+  );
+
+  const handleSaveLessonWord = async (wordData: CreateWordInput, id?: string) => {
+    if (id) {
+      await updateWord(id, wordData);
+    } else {
+      await addWord(wordData);
+    }
+  };
+
+  const handleDeleteLessonWord = async (id: string) => {
+    if (window.confirm('Bu kelimeyi silmek istediğinize emin misiniz?')) {
+      await deleteWord(id);
+    }
+  };
+
   const { allProgress, completeTask, startTask, resetTask } = useCampProgress();
   const videoPlayerRef = useRef<YouTubeEmbedHandle | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
@@ -138,6 +172,10 @@ export const GrammarDetailPage: React.FC = () => {
       if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
         setIsCinemaMode((prev) => !prev);
+      } else if (e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        setEditingWord(null);
+        setIsWordModalOpen(true);
       } else if (e.key === 'Escape') {
         if (isDayListDrawerOpen) {
           e.preventDefault();
@@ -521,6 +559,29 @@ export const GrammarDetailPage: React.FC = () => {
 
           {/* Quick Actions */}
           <div className="flex flex-wrap items-center gap-2 shrink-0">
+            {/* Kelime Not Al Butonu */}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setEditingWord(null);
+                setIsWordModalOpen(true);
+              }}
+              className="gap-1.5 text-xs h-9 font-semibold border-primary/40 text-primary hover:bg-primary/10 shadow-xs"
+              title="Bu video dersinden bilinmeyen kelime not al (Kısayol: W)"
+            >
+              <BookMarked className="h-4 w-4" />
+              <span>Kelime Not Al</span>
+              {lessonWords.length > 0 && (
+                <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/20 text-primary font-bold">
+                  {lessonWords.length}
+                </Badge>
+              )}
+              <kbd className="hidden md:inline-flex items-center px-1 py-0.2 rounded text-[9px] font-mono bg-muted text-muted-foreground border border-border/60 ml-0.5">
+                W
+              </kbd>
+            </Button>
+
             {/* Sinema Modu (Geniş Ekran) Aç/Kapat Butonu */}
             <Button
               size="sm"
@@ -769,6 +830,7 @@ export const GrammarDetailPage: React.FC = () => {
                 }
               }}
               onTimeUpdate={(seconds) => {
+                setCurrentVideoSeconds(seconds);
                 const idx = (lesson.sections || []).findIndex((s) => {
                   if (s.startSeconds === undefined) return false;
                   const end = s.endSeconds !== undefined ? s.endSeconds : Infinity;
@@ -781,38 +843,80 @@ export const GrammarDetailPage: React.FC = () => {
             />
           </div>
 
-          {/* Tab Selector: Ders Notları vs Quiz */}
-          <div className="flex items-center gap-2 border-b border-border pb-3 pt-2">
-            <button
-              onClick={() => setActiveTab('notes')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                activeTab === 'notes'
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
-              }`}
-            >
-              <BookOpen className="h-4 w-4" />
-              <span>Ders Notları & Açıklamalar</span>
-            </button>
-
-            {lesson.quiz && lesson.quiz.length > 0 ? (
+          {/* Tab Selector: Ders Notları vs Quiz vs Kelimelerim */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3 pt-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
-                onClick={() => setActiveTab('quiz')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'quiz'
+                onClick={() => setActiveTab('notes')}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                  activeTab === 'notes'
                     ? 'bg-primary text-primary-foreground shadow-sm'
                     : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
                 }`}
               >
-                <Award className="h-4 w-4" />
-                <span>Konu Quizi ({lesson.quiz.length} Soru)</span>
+                <BookOpen className="h-4 w-4" />
+                <span>Ders Notları & Açıklamalar</span>
               </button>
-            ) : (
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs text-muted-foreground bg-muted/30">
-                <Award className="h-3.5 w-3.5 opacity-50" />
-                <span>Quiz video içerisinde</span>
-              </div>
-            )}
+
+              {lesson.quiz && lesson.quiz.length > 0 ? (
+                <button
+                  onClick={() => setActiveTab('quiz')}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                    activeTab === 'quiz'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
+                >
+                  <Award className="h-4 w-4" />
+                  <span>Konu Quizi ({lesson.quiz.length} Soru)</span>
+                </button>
+              ) : (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs text-muted-foreground bg-muted/30">
+                  <Award className="h-3.5 w-3.5 opacity-50" />
+                  <span>Quiz video içerisinde</span>
+                </div>
+              )}
+
+              <button
+                onClick={() => setActiveTab('words')}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                  activeTab === 'words'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                }`}
+              >
+                <BookMarked className="h-4 w-4" />
+                <span>Ders Kelimeleri</span>
+                {lessonWords.length > 0 && (
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      activeTab === 'words'
+                        ? 'bg-primary-foreground text-primary'
+                        : 'bg-primary/15 text-primary'
+                    }`}
+                  >
+                    {lessonWords.length}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {/* Hızlı Kelime Ekle Butonu */}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                setEditingWord(null);
+                setIsWordModalOpen(true);
+              }}
+              className="h-8 text-xs font-semibold gap-1.5 border-primary/30 text-primary hover:bg-primary/10 shadow-xs"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Kelime Not Al</span>
+              <kbd className="hidden sm:inline-block px-1 py-0.2 rounded text-[9px] font-mono bg-muted text-muted-foreground border border-border/60">
+                W
+              </kbd>
+            </Button>
           </div>
 
           {/* Tab Content */}
@@ -822,7 +926,7 @@ export const GrammarDetailPage: React.FC = () => {
               activeSectionIndex={activeSectionIndex}
               onSeekTo={(seconds, idx) => handleSeekToSection(seconds, idx)}
             />
-          ) : (
+          ) : activeTab === 'quiz' ? (
             <div className="space-y-4">
               <div className="text-xs text-muted-foreground">
                 Bu quizdeki sorular Dilci Burak Hoca'nın video anlatımındaki kural ve sınav taktiklerine göre hazırlanmıştır. Yanıtlarınız IndexedDB'ye anında işlenir.
@@ -832,6 +936,89 @@ export const GrammarDetailPage: React.FC = () => {
                 questions={lesson.quiz}
                 onQuizComplete={handleQuizFinished}
               />
+            </div>
+          ) : (
+            /* activeTab === 'words' */
+            <div className="space-y-4 animate-in fade-in duration-200">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-card border border-border">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <BookMarked className="h-4 w-4 text-primary" />
+                    <span>Bu Dersten Not Alınan Bilinmeyen Kelimeler</span>
+                    <Badge variant="outline" className="text-xs font-bold bg-primary/10 text-primary border-primary/20">
+                      {lessonWords.length} Kelime
+                    </Badge>
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Videodaki saniye etiketine tıklayarak doğrudan o kelimenin anlatıldığı ana gidebilirsiniz.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/vocabulary"
+                    className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
+                  >
+                    <span>Tüm Kelime Defterine Git</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+                  <Button
+                    size="sm"
+                    variant="default"
+                    onClick={() => {
+                      setEditingWord(null);
+                      setIsWordModalOpen(true);
+                    }}
+                    className="h-8 text-xs font-bold gap-1 bg-primary text-primary-foreground shadow-xs"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Yeni Kelime Ekle</span>
+                  </Button>
+                </div>
+              </div>
+
+              {lessonWords.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {(lessonWords as SavedWord[]).map((word: SavedWord) => (
+                    <WordCard
+                      key={word.id}
+                      word={word}
+                      onEdit={(w: SavedWord) => {
+                        setEditingWord(w);
+                        setIsWordModalOpen(true);
+                      }}
+                      onDelete={handleDeleteLessonWord}
+                      onToggleStatus={toggleStatus}
+                      onToggleFavorite={toggleFavorite}
+                      onSeekToVideo={(secs) => handleSeekToSection(secs)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl border-2 border-dashed border-border/80 p-8 text-center space-y-3 bg-card/40">
+                  <BookMarked className="h-10 w-10 text-muted-foreground mx-auto opacity-50" />
+                  <div className="space-y-1 max-w-sm mx-auto">
+                    <div className="text-sm font-bold text-foreground">
+                      Bu derse henüz kelime eklenmemiş
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      Videoyu izlerken bilmediğiniz bir kelimeyle karşılaştığınızda klavyeden <kbd className="font-mono bg-muted px-1.5 py-0.5 rounded text-[10px] border border-border">W</kbd> tuşuna basabilir veya aşağıdaki butona tıklayabilirsiniz.
+                    </p>
+                  </div>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => {
+                      setEditingWord(null);
+                      setIsWordModalOpen(true);
+                    }}
+                    className="gap-1.5 text-xs font-bold h-9 px-4"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Bu Derse Kelime Not Et</span>
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -856,6 +1043,27 @@ export const GrammarDetailPage: React.FC = () => {
                 </ol>
               </CardContent>
             </Card>
+
+            {/* Tenses Lab Quick Banner */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent border border-indigo-500/25 space-y-2 text-xs">
+              <div className="font-bold text-indigo-700 dark:text-indigo-300 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
+                  <span>Tenses Lab'da Canlandır</span>
+                </span>
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30">
+                  İnteraktif
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                12 İngilizce zamanı hareketli zaman çizgisinde izleyin, formülleri ve mantığı kavrayın.
+              </p>
+              <Link to="/grammar/tenses-lab" className="block pt-1">
+                <Button size="sm" variant="outline" className="w-full h-8 text-xs font-bold border-indigo-500/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-500/15">
+                  Zamanlar Laboratuvarını Aç →
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
@@ -919,6 +1127,20 @@ export const GrammarDetailPage: React.FC = () => {
           <span className="sm:hidden">Günler</span>
         </button>
       )}
+
+      {/* Kelime Ekleme / Düzenleme Modalı */}
+      <WordModal
+        isOpen={isWordModalOpen}
+        onClose={() => {
+          setIsWordModalOpen(false);
+          setEditingWord(null);
+        }}
+        onSave={handleSaveLessonWord}
+        initialWord={editingWord}
+        defaultLessonId={lesson.id}
+        defaultLessonTitle={lesson.title}
+        defaultVideoTimestamp={currentVideoSeconds}
+      />
     </div>
   );
 };

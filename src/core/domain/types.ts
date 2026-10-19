@@ -92,6 +92,37 @@ export interface UserPreferences {
   updatedAt: string;
 }
 
+export type WordPartOfSpeech =
+  | 'noun'
+  | 'verb'
+  | 'adjective'
+  | 'adverb'
+  | 'phrasal_verb'
+  | 'preposition'
+  | 'conjunction'
+  | 'phrase'
+  | 'other';
+
+export interface SavedWord {
+  id: string;
+  word: string;
+  meaning: string;
+  synonyms: string[];
+  antonyms?: string[];
+  partOfSpeech?: WordPartOfSpeech;
+  exampleSentence?: string;
+  exampleTranslation?: string;
+  sourceLessonId?: string;
+  sourceLessonTitle?: string;
+  sourceType?: 'grammar' | 'reading' | 'vocabulary' | 'manual';
+  videoTimestampSeconds?: number;
+  notes?: string;
+  status: 'learning' | 'mastered';
+  isFavorite?: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface BackupData {
   schemaVersion: number;
   exportedAt: string;
@@ -103,5 +134,6 @@ export interface BackupData {
     vocabularyProgress: VocabularyProgress[];
     reviewQueue: ReviewItem[];
     userPreferences: UserPreferences[];
+    savedWords?: SavedWord[];
   };
 }

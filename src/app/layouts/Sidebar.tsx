@@ -14,6 +14,7 @@ import {
   Moon,
   GraduationCap,
   HardDrive,
+  Activity,
 } from 'lucide-react';
 import { useTheme } from '../providers/ThemeProvider';
 import { useCampProgress } from '../../hooks/useCampProgress';
@@ -30,9 +31,13 @@ export const Sidebar: React.FC = () => {
 
   const moduleLinks = [
     { to: '/grammar', label: 'Grammar', icon: BookOpen, badge: 'Aktif' },
-    { to: '/vocabulary', label: 'Vocabulary', icon: Sparkles, badge: 'Faz 3' },
+    { to: '/vocabulary', label: 'Vocabulary', icon: Sparkles, badge: 'Aktif' },
     { to: '/reading', label: 'Reading', icon: BookMarked, badge: 'Faz 4' },
     { to: '/skills', label: 'Skills', icon: BrainCircuit, badge: 'Faz 5' },
+  ];
+
+  const interactiveLinks = [
+    { to: '/grammar/tenses-lab', label: 'Tenses Lab', icon: Activity, badge: 'Yeni' },
   ];
 
   const secondaryLinks = [
@@ -137,6 +142,42 @@ export const Sidebar: React.FC = () => {
                   </div>
                   {link.badge && (
                     <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/15 text-primary font-bold dark:bg-primary/25">
+                      {link.badge}
+                    </span>
+                  )}
+                </NavLink>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Interactive Tools */}
+        <div>
+          <div className="px-3 mb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80">
+            İnteraktif
+          </div>
+          <nav className="space-y-1">
+            {interactiveLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                      isActive
+                        ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    )
+                  }
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-4 w-4" />
+                    <span>{link.label}</span>
+                  </div>
+                  {link.badge && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 font-bold dark:bg-indigo-500/25">
                       {link.badge}
                     </span>
                   )}

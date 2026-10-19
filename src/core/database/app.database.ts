@@ -6,6 +6,7 @@ import type {
   VocabularyProgress,
   ReviewItem,
   UserPreferences,
+  SavedWord,
 } from '../domain/types';
 
 export class EnglishCampDatabase extends Dexie {
@@ -15,6 +16,7 @@ export class EnglishCampDatabase extends Dexie {
   vocabularyProgress!: Table<VocabularyProgress, string>;
   reviewQueue!: Table<ReviewItem, string>;
   userPreferences!: Table<UserPreferences, string>;
+  savedWords!: Table<SavedWord, string>;
 
   constructor() {
     super('EnglishCampDB');
@@ -27,6 +29,11 @@ export class EnglishCampDatabase extends Dexie {
       vocabularyProgress: '&wordId, status, nextReviewDate',
       reviewQueue: '&id, type, dueAt, referenceId',
       userPreferences: '&id',
+    });
+
+    // Sürüm 2: Bilinmeyen Kelimeler & Kelime Defteri
+    this.version(2).stores({
+      savedWords: '&id, word, sourceLessonId, sourceType, status, createdAt, isFavorite',
     });
   }
 }

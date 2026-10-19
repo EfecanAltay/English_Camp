@@ -14,6 +14,7 @@ export const backupService = {
       vocabularyProgress,
       reviewQueue,
       userPreferences,
+      savedWords,
     ] = await Promise.all([
       db.taskProgress.toArray(),
       db.questionAttempts.toArray(),
@@ -21,10 +22,11 @@ export const backupService = {
       db.vocabularyProgress.toArray(),
       db.reviewQueue.toArray(),
       db.userPreferences.toArray(),
+      db.savedWords.toArray(),
     ]);
 
     const backupPayload: BackupData = {
-      schemaVersion: 1,
+      schemaVersion: 2,
       exportedAt: new Date().toISOString(),
       appVersion: '1.0.0',
       data: {
@@ -34,6 +36,7 @@ export const backupService = {
         vocabularyProgress,
         reviewQueue,
         userPreferences,
+        savedWords,
       },
     };
 
@@ -71,6 +74,7 @@ export const backupService = {
           db.vocabularyProgress,
           db.reviewQueue,
           db.userPreferences,
+          db.savedWords,
         ],
         async () => {
           // Önceki verileri temizle
@@ -81,6 +85,7 @@ export const backupService = {
             db.vocabularyProgress.clear(),
             db.reviewQueue.clear(),
             db.userPreferences.clear(),
+            db.savedWords.clear(),
           ]);
 
           // Yeni verileri yükle
@@ -102,6 +107,9 @@ export const backupService = {
           if (validBackup.data.userPreferences.length > 0) {
             await db.userPreferences.bulkPut(validBackup.data.userPreferences);
           }
+          if (validBackup.data.savedWords && validBackup.data.savedWords.length > 0) {
+            await db.savedWords.bulkPut(validBackup.data.savedWords);
+          }
         }
       );
 
@@ -111,6 +119,7 @@ export const backupService = {
         counts: {
           tasks: validBackup.data.taskProgress.length,
           attempts: validBackup.data.questionAttempts.length,
+          savedWords: validBackup.data.savedWords?.length || 0,
         },
       };
     } catch (err) {
@@ -134,6 +143,7 @@ export const backupService = {
         db.vocabularyProgress,
         db.reviewQueue,
         db.userPreferences,
+        db.savedWords,
       ],
       async () => {
         await Promise.all([
@@ -143,6 +153,7 @@ export const backupService = {
           db.vocabularyProgress.clear(),
           db.reviewQueue.clear(),
           db.userPreferences.clear(),
+          db.savedWords.clear(),
         ]);
       }
     );

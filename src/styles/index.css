@@ -108,3 +108,53 @@
   animation: fastFadeOut 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Tenses Lab Timeline Animations */
+@keyframes timelineDraw {
+  from {
+    stroke-dashoffset: 850;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes timelinePop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes timelinePulse {
+  0%, 100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.timeline-trace {
+  stroke-dasharray: 850;
+  stroke-dashoffset: 850;
+  animation: timelineDraw 1.55s ease-out forwards;
+}
+
+.timeline-appearing {
+  opacity: 0;
+  animation: timelinePop 0.55s ease-out forwards;
+}
+
+.timeline-pulse {
+  animation: timelinePulse 2.2s ease-in-out infinite;
+}
+
+.timeline-moving-dot {
+  filter: drop-shadow(0 0 6px rgba(100, 139, 245, 0.6));
+}
+
+

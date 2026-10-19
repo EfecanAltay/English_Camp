@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   ArrowRight,
   ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 import { PageHeader } from '../../../components/shared/PageHeader';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../../components/ui/card';
@@ -63,6 +64,38 @@ export const GrammarPage: React.FC = () => {
             <Button size="lg" className="gap-2 text-sm shadow-md">
               <Play className="h-4 w-4 fill-current" />
               <span>1. Derse Başla (Tenses Part 1)</span>
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Tenses Lab Interactive Banner */}
+      <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-indigo-950/40 via-purple-950/20 to-card p-6 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2 max-w-2xl">
+            <div className="flex items-center gap-2">
+              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-indigo-600 text-white shadow-xs">
+                <Sparkles className="h-3.5 w-3.5 fill-current" />
+              </span>
+              <Badge variant="outline" className="text-xs bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-500/30 font-bold">
+                Yeni İnteraktif Modül
+              </Badge>
+              <span className="text-xs text-muted-foreground font-semibold">
+                12 Zaman Yapısı • Hareketli Zaman Çizgisi
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              English Tenses Lab — Zamanlar Laboratuvarı
+            </h2>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              Geçmiş, şimdi ve gelecekteki 12 zaman yapısını SVG çizelgesinde canlı animasyonlarla inceleyin; formülleri, Türkçe kullanım mantığını ve pekiştirme sorularını çözün.
+            </p>
+          </div>
+
+          <Link to="/grammar/tenses-lab">
+            <Button size="lg" className="gap-2 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-md shrink-0">
+              <Sparkles className="h-4 w-4" />
+              <span>Laboratuvarı Keşfet</span>
             </Button>
           </Link>
         </div>

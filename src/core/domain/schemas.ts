@@ -92,6 +92,38 @@ export const UserPreferencesSchema = z.object({
   updatedAt: z.string(),
 });
 
+export const WordPartOfSpeechSchema = z.enum([
+  'noun',
+  'verb',
+  'adjective',
+  'adverb',
+  'phrasal_verb',
+  'preposition',
+  'conjunction',
+  'phrase',
+  'other',
+]);
+
+export const SavedWordSchema = z.object({
+  id: z.string().min(1),
+  word: z.string().min(1),
+  meaning: z.string().min(1),
+  synonyms: z.array(z.string()).default([]),
+  antonyms: z.array(z.string()).optional(),
+  partOfSpeech: WordPartOfSpeechSchema.optional(),
+  exampleSentence: z.string().optional(),
+  exampleTranslation: z.string().optional(),
+  sourceLessonId: z.string().optional(),
+  sourceLessonTitle: z.string().optional(),
+  sourceType: z.enum(['grammar', 'reading', 'vocabulary', 'manual']).optional(),
+  videoTimestampSeconds: z.number().nonnegative().optional(),
+  notes: z.string().optional(),
+  status: z.enum(['learning', 'mastered']).default('learning'),
+  isFavorite: z.boolean().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export const BackupDataSchema = z.object({
   schemaVersion: z.number().positive(),
   exportedAt: z.string(),
@@ -103,5 +135,6 @@ export const BackupDataSchema = z.object({
     vocabularyProgress: z.array(VocabularyProgressSchema).default([]),
     reviewQueue: z.array(ReviewItemSchema).default([]),
     userPreferences: z.array(UserPreferencesSchema).default([]),
+    savedWords: z.array(SavedWordSchema).default([]),
   }),
 });
